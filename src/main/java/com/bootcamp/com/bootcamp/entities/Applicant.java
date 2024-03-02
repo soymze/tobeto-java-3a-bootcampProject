@@ -7,15 +7,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name="applicants")
-@EqualsAndHashCode(callSuper = true)
-@Inheritance(strategy = InheritanceType.JOINED)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@PrimaryKeyJoinColumn(name="employer_id",referencedColumnName = "person_id")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Applicant extends User{
 
     @Column(name = "about")

@@ -10,15 +10,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name="instructors")
-@EqualsAndHashCode(callSuper = true)
-@Inheritance(strategy = InheritanceType.JOINED)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@PrimaryKeyJoinColumn(name="employer_id",referencedColumnName = "person_id")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Instructor extends User{
 
     @Column(name = "companyName")

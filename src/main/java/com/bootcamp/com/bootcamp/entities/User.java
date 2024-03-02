@@ -4,14 +4,12 @@ package com.bootcamp.com.bootcamp.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name="users")
+@MappedSuperclass
 public class User{
 
     @Id
