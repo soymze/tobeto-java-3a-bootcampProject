@@ -18,5 +18,4 @@ public class Applicant extends User{
 
     @Column(name = "about")
     private String about;
-
 }

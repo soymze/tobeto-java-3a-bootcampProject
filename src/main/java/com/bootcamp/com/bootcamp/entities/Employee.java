@@ -19,6 +19,4 @@ public class Employee extends User{
 
     @Column(name = "position")
     private String position;
-
-
 }
