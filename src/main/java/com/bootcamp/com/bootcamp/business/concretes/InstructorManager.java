@@ -1,16 +1,13 @@
 package com.bootcamp.com.bootcamp.business.concretes;
 
 import com.bootcamp.com.bootcamp.business.abstracts.InstructorService;
-import com.bootcamp.com.bootcamp.business.requests.create.CreateInstructorRequest;
+import com.bootcamp.com.bootcamp.business.requests.create.instructor.CreateInstructorRequest;
 import com.bootcamp.com.bootcamp.business.responses.create.instructor.CreateInstructorResponse;
-import com.bootcamp.com.bootcamp.business.responses.get.employee.GetByPosition;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetAllInstructorResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetByCompanyName;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetInstructorResponse;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.dataAccess.InstructorRepository;
-import com.bootcamp.com.bootcamp.entities.Applicant;
-import com.bootcamp.com.bootcamp.entities.Employee;
 import com.bootcamp.com.bootcamp.entities.Instructor;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
