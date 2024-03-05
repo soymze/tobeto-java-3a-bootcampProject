@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ApplicantRepository extends JpaRepository<Applicant, Integer> {
 
     Applicant findById(int id);
+    Applicant findByAbout(String about);
 }

@@ -5,12 +5,12 @@ import com.bootcamp.com.bootcamp.business.requests.create.CreateApplicantRequest
 import com.bootcamp.com.bootcamp.business.responses.create.applicant.CreateApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetApplicantResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetByAbout;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.dataAccess.ApplicantRepository;
 import com.bootcamp.com.bootcamp.entities.Applicant;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,4 +48,24 @@ public class ApplicantManager implements ApplicantService {
                 mapperService.forResponse().map(applicant, GetApplicantResponse.class);
         return response;
     }
+
+    @Override
+    public Applicant updateApplicant(Applicant inputApplicant, int id) {
+        Applicant appDB = applicantRepository.findById(id);
+        appDB.setFirstName(inputApplicant.getFirstName());
+        return applicantRepository.save(appDB);
+    }
+
+    @Override
+    public void deleteApplicantById(int id) {
+        applicantRepository.deleteById(id);
+    }
+    @Override
+    public GetByAbout getByAbout(String about) {
+        Applicant applicant = applicantRepository.findByAbout(about);
+        GetByAbout response =
+                mapperService.forResponse().map(applicant, GetByAbout.class);
+        return response;
+    }
+
 }

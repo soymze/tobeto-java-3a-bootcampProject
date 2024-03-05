@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,6 +32,11 @@ public class User{
     private String email;
     @Column(name = "password")
     private String password;
-
+    @Column(name = "createdDate")
+    private LocalDateTime createdDate;
+    @Column(name = "updatedDate")
+    private LocalDateTime updatedDate;
+    @Column(name = "deletedDate")
+    private LocalDateTime deletedDate;
 
 }

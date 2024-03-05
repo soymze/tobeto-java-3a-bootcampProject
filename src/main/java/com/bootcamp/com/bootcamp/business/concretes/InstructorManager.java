@@ -3,10 +3,14 @@ package com.bootcamp.com.bootcamp.business.concretes;
 import com.bootcamp.com.bootcamp.business.abstracts.InstructorService;
 import com.bootcamp.com.bootcamp.business.requests.create.CreateInstructorRequest;
 import com.bootcamp.com.bootcamp.business.responses.create.instructor.CreateInstructorResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.employee.GetByPosition;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetAllInstructorResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetByCompanyName;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetInstructorResponse;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.dataAccess.InstructorRepository;
+import com.bootcamp.com.bootcamp.entities.Applicant;
+import com.bootcamp.com.bootcamp.entities.Employee;
 import com.bootcamp.com.bootcamp.entities.Instructor;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,6 +50,24 @@ public class InstructorManager implements InstructorService {
         Instructor instructor = instructorRepository.findById(id);
         GetInstructorResponse response =
                 mapperService.forResponse().map(instructor, GetInstructorResponse.class);
+        return response;
+    }
+    @Override
+    public Instructor updateInstructor(Instructor inputInstructor, int id) {
+        Instructor insDB = instructorRepository.findById(id);
+        insDB.setFirstName(inputInstructor.getFirstName());
+        return instructorRepository.save(insDB);
+    }
+
+    @Override
+    public void deleteInstructorById(int id) {
+        instructorRepository.deleteById(id);
+    }
+    @Override
+    public GetByCompanyName getByCompanyName(String companyName) {
+        Instructor instructor = instructorRepository.findByCompanyName(companyName);
+        GetByCompanyName response =
+                mapperService.forResponse().map(instructor, GetByCompanyName.class);
         return response;
     }
 }
