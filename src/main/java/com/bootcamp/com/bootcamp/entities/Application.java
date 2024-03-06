@@ -7,8 +7,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name="applications")
 public class Application {
-
+    @Id
     @Column(name = "applicationId")
     private int id;
     @ManyToOne
@@ -16,8 +21,8 @@ public class Application {
     private Applicant applicant;
     @ManyToOne
     @JoinColumn(name = "bootcampId")
-    private int bootcamp_id;
+    private Bootcamp bootcamp;
     @ManyToOne
     @JoinColumn(name = "applicationStateId")
-    private int applicationState_id;
+    private ApplicationState applicationState;
 }

@@ -1,5 +1,10 @@
 package com.bootcamp.com.bootcamp.business.responses.create.applicant;
 
+import com.bootcamp.com.bootcamp.entities.Applicant;
+import com.bootcamp.com.bootcamp.entities.ApplicationState;
+import com.bootcamp.com.bootcamp.entities.Bootcamp;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
