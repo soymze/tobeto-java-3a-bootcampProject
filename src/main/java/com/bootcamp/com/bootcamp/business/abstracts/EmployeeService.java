@@ -5,16 +5,17 @@ import com.bootcamp.com.bootcamp.business.responses.create.employee.CreateEmploy
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetAllEmployeeResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetByPosition;
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetEmployeeResponse;
+import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
 import com.bootcamp.com.bootcamp.entities.Employee;
 
 import java.util.List;
 
 public interface EmployeeService {
 
-    CreateEmployeeResponse create(CreateEmployeeRequest request);
-    List<GetAllEmployeeResponse> getAll();
-    GetEmployeeResponse getById(int id);
-    Employee updateEmployee(Employee employee, int id);
-    void deleteEmployeeById(int id);
-    GetByPosition getByPosition(String position);
+    DataResult<CreateEmployeeResponse> create(CreateEmployeeRequest request);
+    DataResult<List<GetAllEmployeeResponse>> getAll();
+    DataResult<GetEmployeeResponse> getById(int id);
+    DataResult<Employee> updateEmployee(Employee employee, int id);
+    DataResult<?> deleteEmployeeById(int id);
+    DataResult<GetByPosition> getByPosition(String position);
 }

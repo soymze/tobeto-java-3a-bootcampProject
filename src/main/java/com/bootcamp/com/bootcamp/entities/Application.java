@@ -6,11 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name="applications")
+
 public class Application {
 
     @Column(name = "applicationId")

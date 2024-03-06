@@ -1,13 +1,22 @@
 package com.bootcamp.com.bootcamp.business.concretes;
 
 import com.bootcamp.com.bootcamp.business.abstracts.EmployeeService;
+import com.bootcamp.com.bootcamp.business.constants.ApplicantMessages;
+import com.bootcamp.com.bootcamp.business.constants.EmployeeMessages;
 import com.bootcamp.com.bootcamp.business.requests.create.employee.CreateEmployeeRequest;
+import com.bootcamp.com.bootcamp.business.responses.create.applicant.CreateApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.create.employee.CreateEmployeeResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetApplicantResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetByAbout;
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetAllEmployeeResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetByPosition;
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetEmployeeResponse;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
+import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
+import com.bootcamp.com.bootcamp.core.utilities.results.SuccessDataResult;
 import com.bootcamp.com.bootcamp.dataAccess.EmployeeRepository;
+import com.bootcamp.com.bootcamp.entities.Applicant;
 import com.bootcamp.com.bootcamp.entities.Employee;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,49 +32,51 @@ public class EmployeeManager implements EmployeeService {
     private ModelMapperService mapperService;
 
     @Override
-    public CreateEmployeeResponse create(CreateEmployeeRequest request) {
+    public DataResult<CreateEmployeeResponse> create(CreateEmployeeRequest request) {
         Employee employee = mapperService.forRequest().map(request, Employee.class);
         employeeRepository.save(employee);
 
         CreateEmployeeResponse response = mapperService.forResponse()
                 .map(employee, CreateEmployeeResponse.class);
-        return response;
+        return new SuccessDataResult<CreateEmployeeResponse>(response, EmployeeMessages.EmployeeAdded);
     }
 
     @Override
-    public List<GetAllEmployeeResponse> getAll() {
+    public DataResult<List<GetAllEmployeeResponse>> getAll() {
 
         List<Employee> employees = employeeRepository.findAll();
         List<GetAllEmployeeResponse> employeeResponses =
                 employees.stream().map(employee -> mapperService.forResponse().map(employee, GetAllEmployeeResponse.class))
                         .collect(Collectors.toList());
-        return employeeResponses;
+        return new SuccessDataResult<List<GetAllEmployeeResponse>>(employeeResponses,EmployeeMessages.EmployeeListed);
     }
 
     @Override
-    public GetEmployeeResponse getById(int id) {
+    public DataResult<GetEmployeeResponse> getById(int id) {
         Employee employee = employeeRepository.findById(id);
         GetEmployeeResponse response =
                 mapperService.forResponse().map(employee, GetEmployeeResponse.class);
-        return response;
+        return new SuccessDataResult<GetEmployeeResponse>(response,EmployeeMessages.EmployeeListed);
     }
 
     @Override
-    public Employee updateEmployee(Employee inputEmployee, int id) {
+    public DataResult<Employee> updateEmployee(Employee inputEmployee, int id) {
         Employee empDB = employeeRepository.findById(id);
         empDB.setFirstName(inputEmployee.getFirstName());
-        return employeeRepository.save(empDB);
+        employeeRepository.save(empDB);
+        return new SuccessDataResult<Employee>(empDB,EmployeeMessages.EmployeeUpdated);
     }
 
     @Override
-    public void deleteEmployeeById(int id) {
+    public DataResult<?> deleteEmployeeById(int id) {
         employeeRepository.deleteById(id);
+        return new SuccessDataResult<>(null,EmployeeMessages.EmployeeDeleted);
     }
     @Override
-    public GetByPosition getByPosition(String position) {
+    public DataResult<GetByPosition> getByPosition(String position) {
         Employee employee = employeeRepository.findByPosition(position);
         GetByPosition response =
                 mapperService.forResponse().map(employee, GetByPosition.class);
-        return response;
+        return new SuccessDataResult<GetByPosition>(response,EmployeeMessages.EmployeeListed);
     }
 }

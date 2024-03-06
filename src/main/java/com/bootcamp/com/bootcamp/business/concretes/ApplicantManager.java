@@ -1,12 +1,15 @@
 package com.bootcamp.com.bootcamp.business.concretes;
 
 import com.bootcamp.com.bootcamp.business.abstracts.ApplicantService;
+import com.bootcamp.com.bootcamp.business.constants.ApplicantMessages;
 import com.bootcamp.com.bootcamp.business.requests.create.applicant.CreateApplicantRequest;
 import com.bootcamp.com.bootcamp.business.responses.create.applicant.CreateApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetByAbout;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
+import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
+import com.bootcamp.com.bootcamp.core.utilities.results.SuccessDataResult;
 import com.bootcamp.com.bootcamp.dataAccess.ApplicantRepository;
 import com.bootcamp.com.bootcamp.entities.Applicant;
 import lombok.AllArgsConstructor;
@@ -22,50 +25,52 @@ public class ApplicantManager implements ApplicantService {
     private ModelMapperService mapperService;
 
     @Override
-    public CreateApplicantResponse create(CreateApplicantRequest request) {
+    public DataResult<CreateApplicantResponse> create(CreateApplicantRequest request) {
         Applicant applicant = mapperService.forRequest().map(request, Applicant.class);
         applicantRepository.save(applicant);
 
         CreateApplicantResponse response = mapperService.forResponse()
                 .map(applicant, CreateApplicantResponse.class);
-        return response;
+        return new SuccessDataResult<CreateApplicantResponse>(response, ApplicantMessages.ApplicantAdded);
     }
 
     @Override
-    public List<GetAllApplicantResponse> getAll() {
+    public DataResult<List<GetAllApplicantResponse>> getAll() {
 
         List<Applicant> applicants = applicantRepository.findAll();
         List<GetAllApplicantResponse> applicantResponses =
                 applicants.stream().map(applicant -> mapperService.forResponse().map(applicant, GetAllApplicantResponse.class))
                         .collect(Collectors.toList());
-        return applicantResponses;
+        return new SuccessDataResult<List<GetAllApplicantResponse>>(applicantResponses,ApplicantMessages.ApplicantListed);
     }
 
     @Override
-    public GetApplicantResponse getById(int id) {
+    public DataResult<GetApplicantResponse> getById(int id) {
         Applicant applicant = applicantRepository.findById(id);
         GetApplicantResponse response =
                 mapperService.forResponse().map(applicant, GetApplicantResponse.class);
-        return response;
+        return new SuccessDataResult<GetApplicantResponse>(response,ApplicantMessages.ApplicantListed);
     }
 
     @Override
-    public Applicant updateApplicant(Applicant inputApplicant, int id) {
+    public DataResult<Applicant> updateApplicant(Applicant inputApplicant, int id) {
         Applicant appDB = applicantRepository.findById(id);
         appDB.setFirstName(inputApplicant.getFirstName());
-        return applicantRepository.save(appDB);
+        applicantRepository.save(appDB);
+        return new SuccessDataResult<Applicant>(appDB,ApplicantMessages.ApplicantUpdated);
     }
 
     @Override
-    public void deleteApplicantById(int id) {
+    public DataResult<?> deleteApplicantById(int id) {
         applicantRepository.deleteById(id);
+        return new SuccessDataResult<>(null,ApplicantMessages.ApplicantDeleted);
     }
     @Override
-    public GetByAbout getByAbout(String about) {
+    public DataResult<GetByAbout> getByAbout(String about) {
         Applicant applicant = applicantRepository.findByAbout(about);
         GetByAbout response =
                 mapperService.forResponse().map(applicant, GetByAbout.class);
-        return response;
+        return new SuccessDataResult<GetByAbout>(response,ApplicantMessages.ApplicantListed);
     }
 
 }

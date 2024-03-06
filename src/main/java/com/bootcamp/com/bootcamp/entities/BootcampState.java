@@ -8,11 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name="bootcampStates")
+
 public class BootcampState {
     @Column(name = "id")
     private int id;

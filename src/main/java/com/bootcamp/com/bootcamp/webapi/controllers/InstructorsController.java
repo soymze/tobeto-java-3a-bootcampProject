@@ -10,6 +10,7 @@ import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetInstructor
 import com.bootcamp.com.bootcamp.entities.Instructor;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,35 +18,33 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/instructors")
 @AllArgsConstructor
-public class InstructorsController {
+public class InstructorsController extends BaseController{
 
     @Autowired
     private InstructorService instructorService;
     @PostMapping()
-    public CreateInstructorResponse create(@RequestBody CreateInstructorRequest request){
-        CreateInstructorResponse result = instructorService.create(request);
-        return result;
+    public ResponseEntity<?> create(@RequestBody CreateInstructorRequest request){
+        return handleDataResult(instructorService.create(request));
     }
     @GetMapping("getallInstructors")
-    public List<GetAllInstructorResponse> getAll(){
-        return instructorService.getAll();
+    public ResponseEntity<?> getAll(){
+        return handleDataResult(instructorService.getAll());
     }
 
     @GetMapping("getbyid/{id}")
-    public GetInstructorResponse getById(@PathVariable int id){
-        return instructorService.getById(id);
+    public ResponseEntity<?> getById(@PathVariable int id){
+        return handleDataResult(instructorService.getById(id));
     }
     @PutMapping("/updateInstructor/{id}")
-    public Instructor updateApplicant(@RequestBody Instructor inputInstructor, @PathVariable("id") int id) {
-        return instructorService.updateInstructor(inputInstructor, id);
+    public ResponseEntity<?> updateApplicant(@RequestBody Instructor inputInstructor, @PathVariable("id") int id) {
+        return handleDataResult(instructorService.updateInstructor(inputInstructor, id));
     }
     @DeleteMapping("/deleteInstructorById/{id}")
-    public String deleteInstructorById(@PathVariable("id") int id){
-        instructorService.deleteInstructorById(id);
-        return "Deleted Successfully";
+    public ResponseEntity<?> deleteInstructorById(@PathVariable("id") int id){
+        return handleDataResult(instructorService.deleteInstructorById(id));
     }
     @GetMapping("getbycompanyname/{companyName}")
-    public GetByCompanyName getByCompanyName(@PathVariable String companyName){
-        return instructorService.getByCompanyName(companyName);
+    public ResponseEntity<?> getByCompanyName(@PathVariable String companyName){
+        return handleDataResult(instructorService.getByCompanyName(companyName));
     }
 }

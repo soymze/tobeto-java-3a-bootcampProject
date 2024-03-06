@@ -3,49 +3,42 @@ package com.bootcamp.com.bootcamp.webapi.controllers;
 
 import com.bootcamp.com.bootcamp.business.abstracts.ApplicantService;
 import com.bootcamp.com.bootcamp.business.requests.create.applicant.CreateApplicantRequest;
-import com.bootcamp.com.bootcamp.business.responses.create.applicant.CreateApplicantResponse;
-import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
-import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetApplicantResponse;
-import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetByAbout;
 import com.bootcamp.com.bootcamp.entities.Applicant;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/applicants")
 @AllArgsConstructor
-public class ApplicantsController {
+public class ApplicantsController extends BaseController{
 
     @Autowired
     private ApplicantService applicantService;
     @PostMapping()
-    public CreateApplicantResponse create(@RequestBody CreateApplicantRequest request){
-        CreateApplicantResponse result = applicantService.create(request);
-        return result;
+    public ResponseEntity<?> create(@RequestBody CreateApplicantRequest request){
+        return handleDataResult(applicantService.create(request));
     }
     @GetMapping("getallApplicants")
-    public List<GetAllApplicantResponse> getAll(){
-        return applicantService.getAll();
+    public ResponseEntity<?> getAll(){
+        return handleDataResult(applicantService.getAll());
     }
     @GetMapping("getbyid/{id}")
-    public GetApplicantResponse getById(@PathVariable int id){
-        return applicantService.getById(id);
+    public ResponseEntity<?> getById(@PathVariable int id){
+        return handleDataResult(applicantService.getById(id));
     }
     @PutMapping("/updateApplicant/{id}")
-    public Applicant updateApplicant(@RequestBody Applicant inputApplicant,@PathVariable("id") int id) {
-        return applicantService.updateApplicant(inputApplicant, id);
+    public ResponseEntity<?> updateApplicant(@RequestBody Applicant inputApplicant, @PathVariable("id") int id) {
+        return handleDataResult(applicantService.updateApplicant(inputApplicant, id));
     }
     @DeleteMapping("/deleteApplicantById/{id}")
-    public String deleteApplicantById(@PathVariable("id") int id){
-        applicantService.deleteApplicantById(id);
-        return "Deleted Successfully";
+    public ResponseEntity<?>  deleteApplicantById(@PathVariable("id") int id){
+        return handleDataResult(applicantService.deleteApplicantById(id));
     }
 
     @GetMapping("getbyabout/{about}")
-    public GetByAbout getByAbout(@PathVariable String about){
-        return applicantService.getByAbout(about);
+    public ResponseEntity<?> getByAbout(@PathVariable String about){
+        return handleDataResult(applicantService.getByAbout(about));
     }
 }

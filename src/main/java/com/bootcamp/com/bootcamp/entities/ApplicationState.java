@@ -8,11 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name="applicationStates")
+
 public class ApplicationState {
     @Column(name = "id")
     private int id;

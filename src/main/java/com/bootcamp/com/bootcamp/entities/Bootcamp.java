@@ -10,11 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name="bootcamps")
+
 public class Bootcamp {
     @Column(name = "id")
     private int id;
