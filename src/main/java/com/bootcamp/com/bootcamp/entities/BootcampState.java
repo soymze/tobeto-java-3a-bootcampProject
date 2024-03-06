@@ -1,10 +1,7 @@
 package com.bootcamp.com.bootcamp.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name="bootcampStates")
+@Builder
 public class BootcampState {
     @Id
     private int id;
