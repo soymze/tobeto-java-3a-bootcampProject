@@ -3,7 +3,9 @@ package com.bootcamp.com.bootcamp.business.abstracts;
 
 import com.bootcamp.com.bootcamp.business.requests.create.bootcampState.CreateBootcampStateRequest;
 import com.bootcamp.com.bootcamp.business.responses.create.bootcampState.CreateBootcampStateResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.bootcampState.GetAllBootcampStateResponse;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
 import com.bootcamp.com.bootcamp.entities.BootcampState;
 
@@ -14,4 +16,5 @@ public interface BootcampStateService {
     DataResult<List<GetAllBootcampStateResponse>> getAll();
     DataResult<BootcampState> updateBootcampState(BootcampState bootcampState, int id);
     DataResult<?> deleteBootcampStateById(int id);
+    DataResult<List<GetAllBootcampStateResponse>> getAllPage(PageDto pageDto);
 }

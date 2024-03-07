@@ -7,12 +7,17 @@ import com.bootcamp.com.bootcamp.business.responses.create.applicant.CreateAppli
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetByAbout;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
 import com.bootcamp.com.bootcamp.core.utilities.results.SuccessDataResult;
 import com.bootcamp.com.bootcamp.dataAccess.ApplicantRepository;
 import com.bootcamp.com.bootcamp.entities.Applicant;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,6 +76,18 @@ public class ApplicantManager implements ApplicantService {
         GetByAbout response =
                 mapperService.forResponse().map(applicant, GetByAbout.class);
         return new SuccessDataResult<GetByAbout>(response,ApplicantMessages.ApplicantListed);
+    }
+
+    @Override
+    public DataResult<List<GetAllApplicantResponse>> getAllPage(PageDto pageDto) {
+        Sort sort = Sort.by(Sort.Direction.fromString
+                (pageDto.getSortDirection()),pageDto.getSortBy());
+        Pageable pageable = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize(), sort);
+        Page<Applicant> applicants = applicantRepository.findAll(pageable);
+        List<GetAllApplicantResponse> responses = applicants.stream()
+                .map(applicant -> mapperService.forResponse()
+                        .map(applicant, GetAllApplicantResponse.class)).toList();
+        return new SuccessDataResult<List<GetAllApplicantResponse>>(responses);
     }
 
 }

@@ -3,6 +3,7 @@ package com.bootcamp.com.bootcamp.webapi.controllers;
 
 import com.bootcamp.com.bootcamp.business.abstracts.BootcampStateService;
 import com.bootcamp.com.bootcamp.business.requests.create.bootcampState.CreateBootcampStateRequest;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.BootcampState;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,9 @@ public class BootcampStatesController extends BaseController{
     @DeleteMapping("/deleteBootcampStateById/{id}")
     public ResponseEntity<?>  deleteBootcampStateById(@PathVariable("id") int id){
         return handleDataResult(bootcampStateService.deleteBootcampStateById(id));
+    }
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto){
+        return handleDataResult(bootcampStateService.getAllPage(pageDto));
     }
 }

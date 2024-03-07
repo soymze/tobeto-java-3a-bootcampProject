@@ -5,13 +5,20 @@ import com.bootcamp.com.bootcamp.business.abstracts.ApplicationService;
 import com.bootcamp.com.bootcamp.business.constants.ApplicationMessages;
 import com.bootcamp.com.bootcamp.business.requests.create.application.CreateApplicationRequest;
 import com.bootcamp.com.bootcamp.business.responses.create.application.CreateApplicationResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.application.GetAllApplicationResponse;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
 import com.bootcamp.com.bootcamp.core.utilities.results.SuccessDataResult;
 import com.bootcamp.com.bootcamp.dataAccess.ApplicationRepository;
+import com.bootcamp.com.bootcamp.entities.Applicant;
 import com.bootcamp.com.bootcamp.entities.Application;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,5 +60,17 @@ public class ApplicationManager implements ApplicationService {
     public DataResult<?> deleteApplicationById(int id) {
         applicationRepository.deleteById(id);
         return new SuccessDataResult<>(null,ApplicationMessages.ApplicationDeleted);
+    }
+
+    @Override
+    public DataResult<List<GetAllApplicationResponse>> getAllPage(PageDto pageDto) {
+        Sort sort = Sort.by(Sort.Direction.fromString
+                (pageDto.getSortDirection()),pageDto.getSortBy());
+        Pageable pageable = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize(), sort);
+        Page<Application> applications = applicationRepository.findAll(pageable);
+        List<GetAllApplicationResponse> responses = applications.stream()
+                .map(application -> mapperService.forResponse()
+                        .map(application, GetAllApplicationResponse.class)).toList();
+        return new SuccessDataResult<List<GetAllApplicationResponse>>(responses);
     }
 }

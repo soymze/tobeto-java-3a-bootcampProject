@@ -7,6 +7,7 @@ import com.bootcamp.com.bootcamp.business.responses.create.instructor.CreateInst
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetAllInstructorResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetByCompanyName;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetInstructorResponse;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.Instructor;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,9 @@ public class InstructorsController extends BaseController{
     @GetMapping("getbycompanyname/{companyName}")
     public ResponseEntity<?> getByCompanyName(@PathVariable String companyName){
         return handleDataResult(instructorService.getByCompanyName(companyName));
+    }
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto){
+        return handleDataResult(instructorService.getAllPage(pageDto));
     }
 }

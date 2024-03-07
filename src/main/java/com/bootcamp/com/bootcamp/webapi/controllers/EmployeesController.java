@@ -7,6 +7,7 @@ import com.bootcamp.com.bootcamp.business.responses.create.employee.CreateEmploy
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetAllEmployeeResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetByPosition;
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetEmployeeResponse;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.Employee;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,12 @@ public class EmployeesController extends BaseController{
     public ResponseEntity<?> deleteEmployeeById(@PathVariable("id") int id){
         return handleDataResult(employeeService.deleteEmployeeById(id));
     }
-
     @GetMapping("getbyposition/{position}")
     public ResponseEntity<?> getByPosition(@PathVariable String position){
         return handleDataResult(employeeService.getByPosition(position));
+    }
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto){
+        return handleDataResult(employeeService.getAllPage(pageDto));
     }
 }

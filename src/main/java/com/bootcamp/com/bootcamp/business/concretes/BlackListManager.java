@@ -4,13 +4,20 @@ import com.bootcamp.com.bootcamp.business.abstracts.BlacklistService;
 import com.bootcamp.com.bootcamp.business.constants.BlackListMessages;
 import com.bootcamp.com.bootcamp.business.requests.create.blackList.CreateBlackListRequest;
 import com.bootcamp.com.bootcamp.business.responses.create.blackList.CreateBlackListResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.applicationState.GetAllApplicationStateResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.blackList.GetAllBlackListResponse;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
 import com.bootcamp.com.bootcamp.core.utilities.results.SuccessDataResult;
 import com.bootcamp.com.bootcamp.dataAccess.BlackListRepository;
+import com.bootcamp.com.bootcamp.entities.ApplicationState;
 import com.bootcamp.com.bootcamp.entities.BlackList;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,5 +57,17 @@ public class BlackListManager implements BlacklistService {
     public DataResult<?> deleteBlacklistById(int id) {
         blacklistRepository.deleteById(id);
         return new SuccessDataResult<>(null,BlackListMessages.BlacklistDeleted);
+    }
+
+    @Override
+    public DataResult<List<GetAllBlackListResponse>> getAllPage(PageDto pageDto) {
+        Sort sort = Sort.by(Sort.Direction.fromString
+                (pageDto.getSortDirection()),pageDto.getSortBy());
+        Pageable pageable = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize(), sort);
+        Page<BlackList> blackLists = blacklistRepository.findAll(pageable);
+        List<GetAllBlackListResponse> responses = blackLists.stream()
+                .map(blackList -> mapperService.forResponse()
+                        .map(blackList, GetAllBlackListResponse.class)).toList();
+        return new SuccessDataResult<List<GetAllBlackListResponse>>(responses);
     }
 }

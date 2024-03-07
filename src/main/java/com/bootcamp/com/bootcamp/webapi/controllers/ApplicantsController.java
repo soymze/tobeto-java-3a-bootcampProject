@@ -3,6 +3,7 @@ package com.bootcamp.com.bootcamp.webapi.controllers;
 
 import com.bootcamp.com.bootcamp.business.abstracts.ApplicantService;
 import com.bootcamp.com.bootcamp.business.requests.create.applicant.CreateApplicantRequest;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.Applicant;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,12 @@ public class ApplicantsController extends BaseController{
     public ResponseEntity<?>  deleteApplicantById(@PathVariable("id") int id){
         return handleDataResult(applicantService.deleteApplicantById(id));
     }
-
     @GetMapping("getbyabout/{about}")
     public ResponseEntity<?> getByAbout(@PathVariable String about){
         return handleDataResult(applicantService.getByAbout(about));
+    }
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto){
+        return handleDataResult(applicantService.getAllPage(pageDto));
     }
 }

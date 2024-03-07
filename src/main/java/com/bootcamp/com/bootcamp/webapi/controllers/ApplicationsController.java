@@ -2,6 +2,7 @@ package com.bootcamp.com.bootcamp.webapi.controllers;
 
 import com.bootcamp.com.bootcamp.business.abstracts.ApplicationService;
 import com.bootcamp.com.bootcamp.business.requests.create.application.CreateApplicationRequest;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.Application;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,9 @@ public class ApplicationsController extends BaseController{
     @DeleteMapping("/deleteApplicationById/{id}")
     public ResponseEntity<?>  deleteApplicationById(@PathVariable("id") int id){
         return handleDataResult(applicationService.deleteApplicationById(id));
+    }
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto){
+        return handleDataResult(applicationService.getAllPage(pageDto));
     }
 }

@@ -3,6 +3,7 @@ package com.bootcamp.com.bootcamp.webapi.controllers;
 
 import com.bootcamp.com.bootcamp.business.abstracts.BlacklistService;
 import com.bootcamp.com.bootcamp.business.requests.create.blackList.CreateBlackListRequest;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.BlackList;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,9 @@ public class BlackListsController extends BaseController{
     @DeleteMapping("/deleteBlackListById/{id}")
     public ResponseEntity<?>  deleteBlackListById(@PathVariable("id") int id){
         return handleDataResult(blacklistService.deleteBlacklistById(id));
+    }
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto){
+        return handleDataResult(blacklistService.getAllPage(pageDto));
     }
 }

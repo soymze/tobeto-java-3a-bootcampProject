@@ -5,13 +5,20 @@ import com.bootcamp.com.bootcamp.business.abstracts.BootcampService;
 import com.bootcamp.com.bootcamp.business.constants.BootcampMessages;
 import com.bootcamp.com.bootcamp.business.requests.create.bootcamp.CreateBootcampRequest;
 import com.bootcamp.com.bootcamp.business.responses.create.bootcamp.CreateBootcampResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.blackList.GetAllBlackListResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.bootcamp.GetAllBootcampResponse;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
 import com.bootcamp.com.bootcamp.core.utilities.results.SuccessDataResult;
 import com.bootcamp.com.bootcamp.dataAccess.BootcampRepository;
+import com.bootcamp.com.bootcamp.entities.BlackList;
 import com.bootcamp.com.bootcamp.entities.Bootcamp;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,5 +60,17 @@ public class BootcampManager implements BootcampService {
     public DataResult<?> deleteBootcampById(int id) {
         bootcampRepository.deleteById(id);
         return new SuccessDataResult<>(null,BootcampMessages.BootcampDeleted);
+    }
+
+    @Override
+    public DataResult<List<GetAllBootcampResponse>> getAllPage(PageDto pageDto) {
+        Sort sort = Sort.by(Sort.Direction.fromString
+                (pageDto.getSortDirection()),pageDto.getSortBy());
+        Pageable pageable = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize(), sort);
+        Page<Bootcamp> bootcamps = bootcampRepository.findAll(pageable);
+        List<GetAllBootcampResponse> responses = bootcamps.stream()
+                .map(bootcamp -> mapperService.forResponse()
+                        .map(bootcamp, GetAllBootcampResponse.class)).toList();
+        return new SuccessDataResult<List<GetAllBootcampResponse>>(responses);
     }
 }

@@ -3,7 +3,9 @@ package com.bootcamp.com.bootcamp.business.abstracts;
 
 import com.bootcamp.com.bootcamp.business.requests.create.application.CreateApplicationRequest;
 import com.bootcamp.com.bootcamp.business.responses.create.application.CreateApplicationResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.application.GetAllApplicationResponse;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
 import com.bootcamp.com.bootcamp.entities.Application;
 
@@ -14,5 +16,5 @@ public interface ApplicationService {
     DataResult<List<GetAllApplicationResponse>> getAll();
     DataResult<Application> updateApplication(Application application, int id);
     DataResult<?> deleteApplicationById(int id);
-
+    DataResult<List<GetAllApplicationResponse>> getAllPage(PageDto pageDto);
 }

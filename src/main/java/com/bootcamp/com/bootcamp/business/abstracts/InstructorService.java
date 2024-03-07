@@ -2,9 +2,11 @@ package com.bootcamp.com.bootcamp.business.abstracts;
 
 import com.bootcamp.com.bootcamp.business.requests.create.instructor.CreateInstructorRequest;
 import com.bootcamp.com.bootcamp.business.responses.create.instructor.CreateInstructorResponse;
+import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetAllInstructorResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetByCompanyName;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetInstructorResponse;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
 import com.bootcamp.com.bootcamp.entities.Instructor;
 
@@ -19,4 +21,5 @@ public interface InstructorService {
     DataResult<Instructor> updateInstructor(Instructor instructor, int id);
     DataResult<?> deleteInstructorById(int id);
     DataResult<GetByCompanyName> getByCompanyName(String companyName);
+    DataResult<List<GetAllInstructorResponse>> getAllPage(PageDto pageDto);
 }

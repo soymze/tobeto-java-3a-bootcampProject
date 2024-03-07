@@ -3,6 +3,7 @@ package com.bootcamp.com.bootcamp.webapi.controllers;
 
 import com.bootcamp.com.bootcamp.business.abstracts.ApplicationStateService;
 import com.bootcamp.com.bootcamp.business.requests.create.applicationState.CreateApplicationStateRequest;
+import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.ApplicationState;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,9 @@ public class ApplicationStatesController extends BaseController{
     @DeleteMapping("/deleteApplicationStateById/{id}")
     public ResponseEntity<?>  deleteApplicationStateById(@PathVariable("id") int id){
         return handleDataResult(applicationStateService.deleteApplicationStateById(id));
+    }
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto){
+        return handleDataResult(applicationStateService.getAllPage(pageDto));
     }
 }
