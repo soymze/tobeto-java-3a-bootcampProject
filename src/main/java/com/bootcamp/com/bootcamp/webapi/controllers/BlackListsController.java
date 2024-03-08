@@ -5,6 +5,7 @@ import com.bootcamp.com.bootcamp.business.abstracts.BlacklistService;
 import com.bootcamp.com.bootcamp.business.requests.create.blackList.CreateBlackListRequest;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.BlackList;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ public class BlackListsController extends BaseController{
     @Autowired
     private BlacklistService blacklistService;
 
-    @PostMapping()
-    public ResponseEntity<?> create(@RequestBody CreateBlackListRequest request){
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody @Valid CreateBlackListRequest request){
         return handleDataResult(blacklistService.create(request));
     }
     @GetMapping("getallBlackLists")

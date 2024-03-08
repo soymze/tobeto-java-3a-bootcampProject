@@ -11,6 +11,6 @@ public interface ApplicantRepository extends JpaRepository<Applicant, Integer> {
 
     Applicant findById(int id);
     Applicant findByAbout(String about);
-    User getByEmail(String email);
+    Applicant getByEmail(String email);
 
 }

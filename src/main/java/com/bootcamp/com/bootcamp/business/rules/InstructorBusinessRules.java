@@ -17,7 +17,7 @@ public class InstructorBusinessRules {
     private InstructorRepository instructorRepository;
 
     public void checkIfMailExists(String email){
-        Instructor instructor = (Instructor) instructorRepository.getByEmail(email.trim());
+        Instructor instructor = instructorRepository.getByEmail(email.trim());
         if(instructor != null){
             throw new BusinessException("This mail has been registered before.");
         }

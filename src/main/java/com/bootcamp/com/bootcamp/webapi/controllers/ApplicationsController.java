@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class ApplicationsController extends BaseController{
     @Autowired
     private ApplicationService applicationService;
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody CreateApplicationRequest request){
         return handleDataResult(applicationService.create(request));
     }

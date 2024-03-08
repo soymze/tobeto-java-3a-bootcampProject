@@ -17,7 +17,7 @@ public class ApplicantBusinessRules {
     private ApplicantRepository applicantRepository;
 
     public void checkIfMailExists(String email){
-        Applicant applicant = (Applicant) applicantRepository.getByEmail(email.trim());
+        Applicant applicant = applicantRepository.getByEmail(email.trim());
         if(applicant != null){
             throw new BusinessException("This mail has been registered before.");
         }

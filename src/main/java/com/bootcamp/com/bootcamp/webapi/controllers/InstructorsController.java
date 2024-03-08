@@ -9,6 +9,7 @@ import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetByCompanyN
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetInstructorResponse;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.Instructor;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,8 @@ public class InstructorsController extends BaseController{
 
     @Autowired
     private InstructorService instructorService;
-    @PostMapping()
-    public ResponseEntity<?> create(@RequestBody CreateInstructorRequest request){
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody @Valid CreateInstructorRequest request){
         return handleDataResult(instructorService.create(request));
     }
     @GetMapping("getallInstructors")

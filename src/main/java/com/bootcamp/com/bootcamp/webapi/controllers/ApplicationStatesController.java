@@ -5,6 +5,7 @@ import com.bootcamp.com.bootcamp.business.abstracts.ApplicationStateService;
 import com.bootcamp.com.bootcamp.business.requests.create.applicationState.CreateApplicationStateRequest;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.ApplicationState;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class ApplicationStatesController extends BaseController{
     @Autowired
     private ApplicationStateService applicationStateService;
-    @PostMapping()
-    public ResponseEntity<?> create(@RequestBody CreateApplicationStateRequest request){
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody @Valid CreateApplicationStateRequest request){
         return handleDataResult(applicationStateService.create(request));
     }
     @GetMapping("getallApplicationStates")

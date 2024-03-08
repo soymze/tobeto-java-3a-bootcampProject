@@ -5,6 +5,7 @@ import com.bootcamp.com.bootcamp.business.abstracts.ApplicantService;
 import com.bootcamp.com.bootcamp.business.requests.create.applicant.CreateApplicantRequest;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.Applicant;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ public class ApplicantsController extends BaseController{
 
     @Autowired
     private ApplicantService applicantService;
-    @PostMapping()
-    public ResponseEntity<?> create(@RequestBody CreateApplicantRequest request){
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody @Valid CreateApplicantRequest request){
         return handleDataResult(applicantService.create(request));
     }
     @GetMapping("getallApplicants")

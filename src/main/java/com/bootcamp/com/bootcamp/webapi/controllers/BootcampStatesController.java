@@ -5,6 +5,7 @@ import com.bootcamp.com.bootcamp.business.abstracts.BootcampStateService;
 import com.bootcamp.com.bootcamp.business.requests.create.bootcampState.CreateBootcampStateRequest;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.BootcampState;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class BootcampStatesController extends BaseController{
     @Autowired
     private BootcampStateService bootcampStateService;
-    @PostMapping()
-    public ResponseEntity<?> create(@RequestBody CreateBootcampStateRequest request){
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody @Valid CreateBootcampStateRequest request){
         return handleDataResult(bootcampStateService.create(request));
     }
     @GetMapping("getallBootcampStates")

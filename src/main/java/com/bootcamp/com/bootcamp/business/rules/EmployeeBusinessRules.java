@@ -17,7 +17,7 @@ public class EmployeeBusinessRules {
     private EmployeeRepository employeeRepository;
 
     public void checkIfMailExists(String email){
-        Employee employee = (Employee) employeeRepository.getByEmail(email.trim());
+        Employee employee = employeeRepository.getByEmail(email.trim());
         if(employee != null){
             throw new BusinessException("This mail has been registered before.");
         }

@@ -9,6 +9,7 @@ import com.bootcamp.com.bootcamp.business.responses.get.employee.GetByPosition;
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetEmployeeResponse;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.entities.Employee;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,8 @@ public class EmployeesController extends BaseController{
 
     @Autowired
     private EmployeeService employeeService;
-    @PostMapping()
-    public ResponseEntity<?> create(@RequestBody CreateEmployeeRequest request){
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody @Valid CreateEmployeeRequest request){
         return handleDataResult(employeeService.create(request));
     }
     @GetMapping("getallEmployees")

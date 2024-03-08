@@ -11,5 +11,5 @@ public interface InstructorRepository extends JpaRepository<Instructor, Integer>
 
     Instructor findById(int id);
     Instructor findByCompanyName(String companyName);
-    User getByEmail(String email);
+    Instructor getByEmail(String email);
 }

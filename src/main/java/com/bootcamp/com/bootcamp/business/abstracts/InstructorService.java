@@ -13,8 +13,6 @@ import com.bootcamp.com.bootcamp.entities.Instructor;
 import java.util.List;
 
 public interface InstructorService {
-
-
     DataResult<CreateInstructorResponse> create(CreateInstructorRequest request);
     DataResult<List<GetAllInstructorResponse>> getAll();
     DataResult<GetInstructorResponse> getById(int id);
