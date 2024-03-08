@@ -21,4 +21,5 @@ public interface ApplicantService {
     DataResult<?> deleteApplicantById(int id);
     DataResult<GetByAbout> getByAbout(String about);
     DataResult<List<GetAllApplicantResponse>> getAllPage(PageDto pageDto);
+
 }

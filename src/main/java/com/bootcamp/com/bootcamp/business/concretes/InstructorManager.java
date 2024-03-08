@@ -13,6 +13,7 @@ import com.bootcamp.com.bootcamp.business.responses.get.blackList.GetAllBlackLis
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetAllInstructorResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetByCompanyName;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetInstructorResponse;
+import com.bootcamp.com.bootcamp.business.rules.UserBusinessRules;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
@@ -37,10 +38,11 @@ public class InstructorManager implements InstructorService {
 
     private InstructorRepository instructorRepository;
     private ModelMapperService mapperService;
+    private UserBusinessRules userBusinessRules;
 
     @Override
     public DataResult<CreateInstructorResponse> create(CreateInstructorRequest request) {
-
+        userBusinessRules.checkIfMailExists(request.getMail());
         Instructor instructor = mapperService.forRequest().map(request, Instructor.class);
         instructorRepository.save(instructor);
         CreateInstructorResponse response = mapperService.forResponse()

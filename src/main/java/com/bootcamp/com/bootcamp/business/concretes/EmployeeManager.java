@@ -13,6 +13,7 @@ import com.bootcamp.com.bootcamp.business.responses.get.blackList.GetAllBlackLis
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetAllEmployeeResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetByPosition;
 import com.bootcamp.com.bootcamp.business.responses.get.employee.GetEmployeeResponse;
+import com.bootcamp.com.bootcamp.business.rules.UserBusinessRules;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
@@ -37,9 +38,11 @@ public class EmployeeManager implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
     private ModelMapperService mapperService;
+    private UserBusinessRules userBusinessRules;
 
     @Override
     public DataResult<CreateEmployeeResponse> create(CreateEmployeeRequest request) {
+        userBusinessRules.checkIfMailExists(request.getMail());
         Employee employee = mapperService.forRequest().map(request, Employee.class);
         employeeRepository.save(employee);
 

@@ -6,6 +6,7 @@ import com.bootcamp.com.bootcamp.business.requests.create.blackList.CreateBlackL
 import com.bootcamp.com.bootcamp.business.responses.create.blackList.CreateBlackListResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicationState.GetAllApplicationStateResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.blackList.GetAllBlackListResponse;
+import com.bootcamp.com.bootcamp.business.rules.BlackListBusinessRules;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
@@ -28,8 +29,10 @@ import java.util.stream.Collectors;
 public class BlackListManager implements BlacklistService {
     private BlackListRepository blacklistRepository;
     private ModelMapperService mapperService;
+    private BlackListBusinessRules blackListBusinessRules;
     @Override
     public DataResult<CreateBlackListResponse> create(CreateBlackListRequest request) {
+        blackListBusinessRules.checkIfApplicantInBlackList(request.getApplicant().getId());
         BlackList blacklist = mapperService.forRequest().map(request, BlackList.class);
         blacklistRepository.save(blacklist);
 

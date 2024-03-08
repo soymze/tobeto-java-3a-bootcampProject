@@ -7,6 +7,7 @@ import com.bootcamp.com.bootcamp.business.responses.create.applicant.CreateAppli
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetByAbout;
+import com.bootcamp.com.bootcamp.business.rules.UserBusinessRules;
 import com.bootcamp.com.bootcamp.core.exceptions.types.BusinessException;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
@@ -29,10 +30,11 @@ public class ApplicantManager implements ApplicantService {
 
     private ApplicantRepository applicantRepository;
     private ModelMapperService mapperService;
+    private UserBusinessRules userBusinessRules;
 
     @Override
     public DataResult<CreateApplicantResponse> create(CreateApplicantRequest request) {
-        checkIfApplicantNameExists(request.getFirstName());
+        userBusinessRules.checkIfMailExists(request.getMail());
         Applicant applicant = mapperService.forRequest().map(request, Applicant.class);
         applicantRepository.save(applicant);
 
@@ -92,11 +94,5 @@ public class ApplicantManager implements ApplicantService {
         return new SuccessDataResult<List<GetAllApplicantResponse>>(responses);
     }
 
-    private void checkIfApplicantNameExists(String name){
-        Applicant applicant = applicantRepository.getByfirstName(name);
-        if(applicant!=null){
-            throw new BusinessException("Find another name");
-        }
-    }
 
 }

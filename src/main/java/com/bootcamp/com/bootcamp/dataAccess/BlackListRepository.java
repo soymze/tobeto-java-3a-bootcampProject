@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BlackListRepository extends JpaRepository<BlackList, Integer> {
     BlackList findById(int id);
+    BlackList getByApplicantId(int id);
 }
