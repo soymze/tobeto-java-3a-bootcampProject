@@ -4,23 +4,16 @@ import com.bootcamp.com.bootcamp.business.abstracts.InstructorService;
 import com.bootcamp.com.bootcamp.business.constants.ApplicantMessages;
 import com.bootcamp.com.bootcamp.business.constants.InstructorMessages;
 import com.bootcamp.com.bootcamp.business.requests.create.instructor.CreateInstructorRequest;
-import com.bootcamp.com.bootcamp.business.responses.create.applicant.CreateApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.create.instructor.CreateInstructorResponse;
-import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
-import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetApplicantResponse;
-import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetByAbout;
-import com.bootcamp.com.bootcamp.business.responses.get.blackList.GetAllBlackListResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetAllInstructorResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetByCompanyName;
 import com.bootcamp.com.bootcamp.business.responses.get.instructor.GetInstructorResponse;
-import com.bootcamp.com.bootcamp.business.rules.UserBusinessRules;
+import com.bootcamp.com.bootcamp.business.rules.InstructorBusinessRules;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
 import com.bootcamp.com.bootcamp.core.utilities.results.SuccessDataResult;
 import com.bootcamp.com.bootcamp.dataAccess.InstructorRepository;
-import com.bootcamp.com.bootcamp.entities.Applicant;
-import com.bootcamp.com.bootcamp.entities.BlackList;
 import com.bootcamp.com.bootcamp.entities.Instructor;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,11 +31,11 @@ public class InstructorManager implements InstructorService {
 
     private InstructorRepository instructorRepository;
     private ModelMapperService mapperService;
-    private UserBusinessRules userBusinessRules;
+    private InstructorBusinessRules instructorBusinessRules;
 
     @Override
     public DataResult<CreateInstructorResponse> create(CreateInstructorRequest request) {
-        userBusinessRules.checkIfMailExists(request.getMail());
+        instructorBusinessRules.checkIfMailExists(request.getEmail());
         Instructor instructor = mapperService.forRequest().map(request, Instructor.class);
         instructorRepository.save(instructor);
         CreateInstructorResponse response = mapperService.forResponse()

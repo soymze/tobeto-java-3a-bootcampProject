@@ -20,5 +20,5 @@ public class CreateApplicantResponse {
     private String firstName;
     private String lastName;
     private String about;
-    private String mail;
+    private String email;
 }

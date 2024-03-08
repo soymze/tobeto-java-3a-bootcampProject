@@ -7,8 +7,7 @@ import com.bootcamp.com.bootcamp.business.responses.create.applicant.CreateAppli
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetByAbout;
-import com.bootcamp.com.bootcamp.business.rules.UserBusinessRules;
-import com.bootcamp.com.bootcamp.core.exceptions.types.BusinessException;
+import com.bootcamp.com.bootcamp.business.rules.ApplicantBusinessRules;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
@@ -30,11 +29,11 @@ public class ApplicantManager implements ApplicantService {
 
     private ApplicantRepository applicantRepository;
     private ModelMapperService mapperService;
-    private UserBusinessRules userBusinessRules;
+    private ApplicantBusinessRules applicantBusinessRules;
 
     @Override
     public DataResult<CreateApplicantResponse> create(CreateApplicantRequest request) {
-        userBusinessRules.checkIfMailExists(request.getMail());
+        applicantBusinessRules.checkIfMailExists(request.getEmail());
         Applicant applicant = mapperService.forRequest().map(request, Applicant.class);
         applicantRepository.save(applicant);
 

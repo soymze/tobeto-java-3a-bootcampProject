@@ -15,5 +15,5 @@ public class CreateEmployeeResponse {
     private String firstName;
     private String lastName;
     private String position;
-    private String mail;
+    private String email;
 }
