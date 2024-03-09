@@ -8,6 +8,7 @@ import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetAllApplican
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetApplicantResponse;
 import com.bootcamp.com.bootcamp.business.responses.get.applicant.GetByAbout;
 import com.bootcamp.com.bootcamp.business.rules.ApplicantBusinessRules;
+import com.bootcamp.com.bootcamp.core.aspects.logging.Loggable;
 import com.bootcamp.com.bootcamp.core.paging.PageDto;
 import com.bootcamp.com.bootcamp.core.utilities.mapping.ModelMapperService;
 import com.bootcamp.com.bootcamp.core.utilities.results.DataResult;
@@ -43,6 +44,7 @@ public class ApplicantManager implements ApplicantService {
     }
 
     @Override
+    @Loggable
     public DataResult<List<GetAllApplicantResponse>> getAll() {
 
         List<Applicant> applicants = applicantRepository.findAll();
